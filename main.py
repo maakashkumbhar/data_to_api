@@ -12,8 +12,6 @@ def convert_data(data):
 
 
 
-
-
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
@@ -22,6 +20,7 @@ def hello_world():
 def excelDataToAPI():
     ##Reading the exccel file and extracting the data
     file = pd.ExcelFile('C:\\Users\\ASUS\\Desktop\\Book1.xlsx')
+
     # print(file.sheet_names)
 
     df1 = file.parse('Sheet1')
@@ -33,6 +32,16 @@ def excelDataToAPI():
     convert_data(data_as_a_dict)
     return jsonify(data_as_a_dict)
 
+
+
+@app.route('/csv_data_api')
+def csv_data_api():
+    file = pd.read_csv('C:\\Users\\ASUS\\Desktop\\samplecsvdata.csv')
+    dataframe1 = pd.DataFrame(file)
+    data_as_dict = dataframe1.to_dict(orient='list')
+    json_csv = jsonify(data_as_dict)
+
+    return json_csv
 
 if __name__ == '__main__':
     app.run(debug=True)
